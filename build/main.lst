@@ -1,0 +1,366 @@
+ARM GAS  /tmp/ccgFhvyf.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/main.c"
+  20              		.section	.text.main,"ax",%progbits
+  21              		.align	1
+  22              		.global	main
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	main:
+  28              	.LFB390:
+   1:Core/Src/main.c **** /* USER CODE BEGIN Header */
+   2:Core/Src/main.c **** /**
+   3:Core/Src/main.c ****   ******************************************************************************
+   4:Core/Src/main.c ****   * @file           : main.c
+   5:Core/Src/main.c ****   * @brief          : Main program body
+   6:Core/Src/main.c ****   ******************************************************************************
+   7:Core/Src/main.c ****   * @attention
+   8:Core/Src/main.c ****   *
+   9:Core/Src/main.c ****   * Copyright (c) 2023 STMicroelectronics.
+  10:Core/Src/main.c ****   * All rights reserved.
+  11:Core/Src/main.c ****   *
+  12:Core/Src/main.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  13:Core/Src/main.c ****   * in the root directory of this software component.
+  14:Core/Src/main.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  15:Core/Src/main.c ****   *
+  16:Core/Src/main.c ****   ******************************************************************************
+  17:Core/Src/main.c ****   */
+  18:Core/Src/main.c **** /* USER CODE END Header */
+  19:Core/Src/main.c **** /* Includes ------------------------------------------------------------------*/
+  20:Core/Src/main.c **** #include "main.h"
+  21:Core/Src/main.c **** #include "odeta_lib.h"
+  22:Core/Src/main.c **** 
+  23:Core/Src/main.c **** int main(void)
+  24:Core/Src/main.c **** {
+  29              		.loc 1 24 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+ARM GAS  /tmp/ccgFhvyf.s 			page 2
+
+
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  25:Core/Src/main.c ****   init();
+  38              		.loc 1 25 3 view .LVU1
+  39 0002 FFF7FEFF 		bl	init
+  40              	.LVL0:
+  26:Core/Src/main.c **** 
+  27:Core/Src/main.c ****   uint32_t state = 0;
+  41              		.loc 1 27 3 view .LVU2
+  28:Core/Src/main.c **** 
+  29:Core/Src/main.c ****   setPinsAsOutput(PIN(C,13), OUTPUT_PUSHPULL|OUTPUT_NOPULL);
+  42              		.loc 1 29 3 view .LVU3
+  43 0006 0021     		movs	r1, #0
+  44 0008 4FF00050 		mov	r0, #536870912
+  45 000c FFF7FEFF 		bl	setPinsAsOutput
+  46              	.LVL1:
+  47 0010 0FE0     		b	.L4
+  48              	.LVL2:
+  49              	.L3:
+  50              	.LBB4:
+  30:Core/Src/main.c ****   while (1)
+  31:Core/Src/main.c ****   {
+  32:Core/Src/main.c ****     for(uint32_t i = 0; i < 10000000; i++) __NOP();
+  51              		.loc 1 32 44 discriminator 3 view .LVU4
+  52              		.syntax unified
+  53              	@ 32 "Core/Src/main.c" 1
+  54 0012 00BF     		nop
+  55              	@ 0 "" 2
+  56              		.loc 1 32 40 discriminator 3 view .LVU5
+  57              		.thumb
+  58              		.syntax unified
+  59 0014 0133     		adds	r3, r3, #1
+  60              	.LVL3:
+  61              	.L2:
+  62              		.loc 1 32 27 discriminator 1 view .LVU6
+  63 0016 084A     		ldr	r2, .L6
+  64 0018 9342     		cmp	r3, r2
+  65 001a FAD3     		bcc	.L3
+  66              	.LBE4:
+  33:Core/Src/main.c ****     state = getOutput(PIN(C,13));
+  67              		.loc 1 33 5 view .LVU7
+  68              		.loc 1 33 13 is_stmt 0 view .LVU8
+  69 001c 4FF00050 		mov	r0, #536870912
+  70 0020 FFF7FEFF 		bl	getOutput
+  71              	.LVL4:
+  34:Core/Src/main.c ****     setOutput(PIN(C,13), !state);
+  72              		.loc 1 34 5 is_stmt 1 view .LVU9
+  73 0024 B0FA80F1 		clz	r1, r0
+  74 0028 4909     		lsrs	r1, r1, #5
+  75 002a 4FF00050 		mov	r0, #536870912
+  76              	.LVL5:
+  77              		.loc 1 34 5 is_stmt 0 view .LVU10
+  78 002e FFF7FEFF 		bl	setOutput
+  79              	.LVL6:
+  30:Core/Src/main.c ****   while (1)
+  80              		.loc 1 30 9 is_stmt 1 view .LVU11
+ARM GAS  /tmp/ccgFhvyf.s 			page 3
+
+
+  81              	.L4:
+  30:Core/Src/main.c ****   while (1)
+  82              		.loc 1 30 3 view .LVU12
+  32:Core/Src/main.c ****     state = getOutput(PIN(C,13));
+  83              		.loc 1 32 5 view .LVU13
+  84              	.LBB5:
+  32:Core/Src/main.c ****     state = getOutput(PIN(C,13));
+  85              		.loc 1 32 9 view .LVU14
+  32:Core/Src/main.c ****     state = getOutput(PIN(C,13));
+  86              		.loc 1 32 18 is_stmt 0 view .LVU15
+  87 0032 0023     		movs	r3, #0
+  32:Core/Src/main.c ****     state = getOutput(PIN(C,13));
+  88              		.loc 1 32 5 view .LVU16
+  89 0034 EFE7     		b	.L2
+  90              	.L7:
+  91 0036 00BF     		.align	2
+  92              	.L6:
+  93 0038 80969800 		.word	10000000
+  94              	.LBE5:
+  95              		.cfi_endproc
+  96              	.LFE390:
+  98              		.section	.text.Error_Handler,"ax",%progbits
+  99              		.align	1
+ 100              		.global	Error_Handler
+ 101              		.syntax unified
+ 102              		.thumb
+ 103              		.thumb_func
+ 105              	Error_Handler:
+ 106              	.LFB391:
+  35:Core/Src/main.c **** 
+  36:Core/Src/main.c ****   }
+  37:Core/Src/main.c **** 
+  38:Core/Src/main.c **** }
+  39:Core/Src/main.c **** 
+  40:Core/Src/main.c **** 
+  41:Core/Src/main.c **** void Error_Handler(void)
+  42:Core/Src/main.c **** {
+ 107              		.loc 1 42 1 is_stmt 1 view -0
+ 108              		.cfi_startproc
+ 109              		@ Volatile: function does not return.
+ 110              		@ args = 0, pretend = 0, frame = 0
+ 111              		@ frame_needed = 0, uses_anonymous_args = 0
+ 112              		@ link register save eliminated.
+  43:Core/Src/main.c ****   __disable_irq();
+ 113              		.loc 1 43 3 view .LVU18
+ 114              	.LBB6:
+ 115              	.LBI6:
+ 116              		.file 2 "lib/Drivers/CMSIS/Include/cmsis_gcc.h"
+   1:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
+   2:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
+   4:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * @version  V5.0.4
+   5:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * @date     09. April 2018
+   6:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  ******************************************************************************/
+   7:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** /*
+   8:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+   9:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+ARM GAS  /tmp/ccgFhvyf.s 			page 4
+
+
+  10:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * SPDX-License-Identifier: Apache-2.0
+  11:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  12:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
+  13:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * not use this file except in compliance with the License.
+  14:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * You may obtain a copy of the License at
+  15:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  16:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * www.apache.org/licenses/LICENSE-2.0
+  17:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  18:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * Unless required by applicable law or agreed to in writing, software
+  19:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  20:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * See the License for the specific language governing permissions and
+  22:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * limitations under the License.
+  23:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  24:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  25:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  26:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  27:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  28:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** /* ignore some GCC warnings */
+  29:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  30:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  31:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  32:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  33:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  34:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** /* Fallback for __has_builtin */
+  35:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __has_builtin
+  36:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __has_builtin(x) (0)
+  37:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  38:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  39:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** /* CMSIS compiler specific defines */
+  40:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ASM
+  41:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ASM                                  __asm
+  42:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  43:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __INLINE
+  44:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __INLINE                               inline
+  45:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  46:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __STATIC_INLINE
+  47:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __STATIC_INLINE                        static inline
+  48:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  49:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __STATIC_FORCEINLINE                 
+  50:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __STATIC_FORCEINLINE                   __attribute__((always_inline)) static inline
+  51:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif                                           
+  52:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __NO_RETURN
+  53:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __NO_RETURN                            __attribute__((__noreturn__))
+  54:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  55:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __USED
+  56:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __USED                                 __attribute__((used))
+  57:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  58:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __WEAK
+  59:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __WEAK                                 __attribute__((weak))
+  60:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  61:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED
+  62:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED                               __attribute__((packed, aligned(1)))
+  63:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  64:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED_STRUCT
+  65:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_STRUCT                        struct __attribute__((packed, aligned(1)))
+  66:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ARM GAS  /tmp/ccgFhvyf.s 			page 5
+
+
+  67:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED_UNION
+  68:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_UNION                         union __attribute__((packed, aligned(1)))
+  69:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  70:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32        /* deprecated */
+  71:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  72:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  73:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  74:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
+  75:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+  76:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32(x)                  (((struct T_UINT32 *)(x))->v)
+  77:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  78:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT16_WRITE
+  79:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  80:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  81:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  82:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT16_WRITE { uint16_t v; };
+  83:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+  84:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT16_WRITE(addr, val)    (void)((((struct T_UINT16_WRITE *)(void *)(addr))-
+  85:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  86:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT16_READ
+  87:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  88:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  89:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  90:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT16_READ { uint16_t v; };
+  91:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+  92:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT16_READ(addr)          (((const struct T_UINT16_READ *)(const void *)(add
+  93:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  94:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32_WRITE
+  95:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  96:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  97:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  98:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_WRITE { uint32_t v; };
+  99:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+ 100:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32_WRITE(addr, val)    (void)((((struct T_UINT32_WRITE *)(void *)(addr))-
+ 101:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 102:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32_READ
+ 103:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+ 104:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+ 105:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+ 106:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
+ 107:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+ 108:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32_READ(addr)          (((const struct T_UINT32_READ *)(const void *)(add
+ 109:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 110:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ALIGNED
+ 111:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ALIGNED(x)                           __attribute__((aligned(x)))
+ 112:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 113:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __RESTRICT
+ 114:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __RESTRICT                             __restrict
+ 115:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 116:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 117:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 118:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+ 119:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+ 120:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+ 121:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
+ 122:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 123:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ARM GAS  /tmp/ccgFhvyf.s 			page 6
+
+
+ 124:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 125:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+ 126:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+ 127:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+ 128:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 129:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __enable_irq(void)
+ 130:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 131:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+ 132:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 133:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 134:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 135:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 136:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Disable IRQ Interrupts
+ 137:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+ 138:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+ 139:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 140:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __disable_irq(void)
+ 117              		.loc 2 140 27 view .LVU19
+ 118              	.LBB7:
+ 141:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 142:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsid i" : : : "memory");
+ 119              		.loc 2 142 3 view .LVU20
+ 120              		.syntax unified
+ 121              	@ 142 "lib/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 122 0000 72B6     		cpsid i
+ 123              	@ 0 "" 2
+ 124              		.thumb
+ 125              		.syntax unified
+ 126              	.L9:
+ 127              	.LBE7:
+ 128              	.LBE6:
+  44:Core/Src/main.c ****   while (1)
+ 129              		.loc 1 44 3 discriminator 1 view .LVU21
+  45:Core/Src/main.c ****   {
+  46:Core/Src/main.c ****   }
+ 130              		.loc 1 46 3 discriminator 1 view .LVU22
+  44:Core/Src/main.c ****   while (1)
+ 131              		.loc 1 44 9 discriminator 1 view .LVU23
+ 132 0002 FEE7     		b	.L9
+ 133              		.cfi_endproc
+ 134              	.LFE391:
+ 136              		.text
+ 137              	.Letext0:
+ 138              		.file 3 "/home/fran/.arm_gnu_toolchain/arm-none-eabi/include/machine/_default_types.h"
+ 139              		.file 4 "/home/fran/.arm_gnu_toolchain/arm-none-eabi/include/sys/_stdint.h"
+ 140              		.file 5 "lib/odeta_gpio.h"
+ 141              		.file 6 "lib/odeta_lib.h"
+ARM GAS  /tmp/ccgFhvyf.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+     /tmp/ccgFhvyf.s:21     .text.main:00000000 $t
+     /tmp/ccgFhvyf.s:27     .text.main:00000000 main
+     /tmp/ccgFhvyf.s:93     .text.main:00000038 $d
+     /tmp/ccgFhvyf.s:99     .text.Error_Handler:00000000 $t
+     /tmp/ccgFhvyf.s:105    .text.Error_Handler:00000000 Error_Handler
+
+UNDEFINED SYMBOLS
+init
+setPinsAsOutput
+getOutput
+setOutput
