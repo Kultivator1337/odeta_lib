@@ -183,13 +183,29 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
-  /* USER CODE BEGIN SysTick_IRQn 0 */
   incTick();
-  /* USER CODE END SysTick_IRQn 0 */
 
-  /* USER CODE BEGIN SysTick_IRQn 1 */
+  //Debounce pins
+  uint32_t lines = _gpioGetDebounceLines();
+  while(lines){
+    uint32_t line = _BIT_POS(lines);
+    GpioIntCB_t *l = _gpioGetIntCallback(line);
+    
+    if (gpioGetInput(l->pin) != l->trig_lvl){
+      l->debounce_cnt = 0;
+      _gpioResetDebounceLine(line);
+    }
+    else if (l->debounce_cnt == l->debounce_t){
+      if (l->f) (l->f)(line);
+      l->debounce_cnt = 0;
+      _gpioResetDebounceLine(line);
+    }
+    else {
+      l->debounce_cnt++;
+    }
+    lines &= ~(0x01UL<<line);
+  }
 
-  /* USER CODE END SysTick_IRQn 1 */
 }
 
 void EXTI0_IRQHandler(void){

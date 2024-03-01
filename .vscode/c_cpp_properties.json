@@ -14,7 +14,9 @@
             "name": "ARM",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/lib/**"
+                "${workspaceFolder}/lib/**",
+                "${workspaceFolder}/app/**"
+
             ],
             "defines": [],
             "cStandard": "c17",

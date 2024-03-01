@@ -24,18 +24,9 @@ int main(void)
 {
   init();
 
-  uint32_t state = 0;
+  app();
 
-  gpioSetPinsAsOutput(PIN(C,13), OUTPUT_PUSHPULL|OUTPUT_NOPULL);
-  
-  while (1)
-  {
-    msDelay(1000);
-    state = gpioGetOutput(PIN(C,13));
-    gpioSetOutput(PIN(C,13), !state);
-
-  }
-
+  for(;;);
 }
 
 

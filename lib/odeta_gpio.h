@@ -39,6 +39,9 @@
 #define PIN(x, y) _P(x, y)
 #define PINS(x, y) _PINS(x, y)
 
+#define LED PIN(C, 13)
+#define KEY PIN(A, 0)
+
 
 typedef union{
     uint32_t pins;
@@ -78,10 +81,23 @@ uint32_t gpioGetOutput(uint32_t pins);
 
 typedef void (*GpioIntHandler_f)(uint32_t);
 
+typedef struct {
+    uint32_t pin;
+    uint32_t trig_lvl;
+    GpioIntHandler_f f;
+    GpioIntMode_t mode;
+    uint32_t debounce_t;
+    uint32_t debounce_cnt;
+} GpioIntCB_t;
+
 void exti_handler(uint32_t line);
 
-void gpioEnableInterrupt(uint32_t pin, GpioIntMode_t mode);
+void gpioEnableInterrupt(uint32_t pin, GpioIntMode_t mode, uint32_t debounce);
 void gpioRegisterInterruptHandler(uint32_t pin, GpioIntHandler_f handler);
+
+uint32_t _gpioGetDebounceLines(void);
+GpioIntCB_t *_gpioGetIntCallback(uint32_t line);
+void _gpioResetDebounceLine(uint32_t line);
 
 
 

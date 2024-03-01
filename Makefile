@@ -29,7 +29,8 @@ lib/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_utils.c \
 lib/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_exti.c \
 Core/Src/system_stm32f4xx.c \
 lib/odeta_gpio.c \
-lib/odeta_lib.c
+lib/odeta_lib.c \
+app/app.c
 
 # ASM sources
 ASM_SOURCES =  \
@@ -101,7 +102,8 @@ C_INCLUDES =  \
 -Ilib/Drivers/STM32F4xx_HAL_Driver/Inc \
 -Ilib/Drivers/CMSIS/Device/ST/STM32F4xx/Include \
 -Ilib/Drivers/CMSIS/Include \
--Ilib
+-Ilib \
+-Iapp
 
 
 # compile gcc flags
@@ -167,7 +169,9 @@ $(BUILD_DIR):
 #######################################
 clean:
 	-rm -fR $(BUILD_DIR)
-  
+
+flash:
+	sudo dfu-util -d 0483:df11 -a 0 -s 0x08000000:leave -D $(BUILD_DIR)/$(TARGET).bin
 #######################################
 # dependencies
 #######################################
