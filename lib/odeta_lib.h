@@ -26,8 +26,12 @@
 #endif
 
 #define _IS_SET(x, bit) ((x&bit)==bit)
+#define _BIT_POS(x)  (31 - __CLZ(x))
 
 
 void init(void);
+uint32_t getTicks(void);
+void incTick(void);
+void msDelay(uint32_t ms_to_wait);
 
 #endif

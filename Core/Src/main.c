@@ -26,12 +26,13 @@ int main(void)
 
   uint32_t state = 0;
 
-  setPinsAsOutput(PIN(C,13), OUTPUT_PUSHPULL|OUTPUT_NOPULL);
+  gpioSetPinsAsOutput(PIN(C,13), OUTPUT_PUSHPULL|OUTPUT_NOPULL);
+  
   while (1)
   {
-    for(uint32_t i = 0; i < 10000000; i++) __NOP();
-    state = getOutput(PIN(C,13));
-    setOutput(PIN(C,13), !state);
+    msDelay(1000);
+    state = gpioGetOutput(PIN(C,13));
+    gpioSetOutput(PIN(C,13), !state);
 
   }
 

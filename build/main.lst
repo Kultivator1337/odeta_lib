@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccgFhvyf.s 			page 1
+ARM GAS  /tmp/ccOKiwTr.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccgFhvyf.s 			page 1
   32              		@ frame_needed = 0, uses_anonymous_args = 0
   33 0000 08B5     		push	{r3, lr}
   34              	.LCFI0:
-ARM GAS  /tmp/ccgFhvyf.s 			page 2
+ARM GAS  /tmp/ccOKiwTr.s 			page 2
 
 
   35              		.cfi_def_cfa_offset 8
@@ -72,103 +72,71 @@ ARM GAS  /tmp/ccgFhvyf.s 			page 1
   27:Core/Src/main.c ****   uint32_t state = 0;
   41              		.loc 1 27 3 view .LVU2
   28:Core/Src/main.c **** 
-  29:Core/Src/main.c ****   setPinsAsOutput(PIN(C,13), OUTPUT_PUSHPULL|OUTPUT_NOPULL);
+  29:Core/Src/main.c ****   gpioSetPinsAsOutput(PIN(C,13), OUTPUT_PUSHPULL|OUTPUT_NOPULL);
   42              		.loc 1 29 3 view .LVU3
   43 0006 0021     		movs	r1, #0
   44 0008 4FF00050 		mov	r0, #536870912
-  45 000c FFF7FEFF 		bl	setPinsAsOutput
+  45 000c FFF7FEFF 		bl	gpioSetPinsAsOutput
   46              	.LVL1:
-  47 0010 0FE0     		b	.L4
-  48              	.LVL2:
-  49              	.L3:
-  50              	.LBB4:
+  47              	.L2:
   30:Core/Src/main.c ****   while (1)
+  48              		.loc 1 30 3 discriminator 1 view .LVU4
   31:Core/Src/main.c ****   {
-  32:Core/Src/main.c ****     for(uint32_t i = 0; i < 10000000; i++) __NOP();
-  51              		.loc 1 32 44 discriminator 3 view .LVU4
-  52              		.syntax unified
-  53              	@ 32 "Core/Src/main.c" 1
-  54 0012 00BF     		nop
-  55              	@ 0 "" 2
-  56              		.loc 1 32 40 discriminator 3 view .LVU5
-  57              		.thumb
-  58              		.syntax unified
-  59 0014 0133     		adds	r3, r3, #1
-  60              	.LVL3:
-  61              	.L2:
-  62              		.loc 1 32 27 discriminator 1 view .LVU6
-  63 0016 084A     		ldr	r2, .L6
-  64 0018 9342     		cmp	r3, r2
-  65 001a FAD3     		bcc	.L3
-  66              	.LBE4:
-  33:Core/Src/main.c ****     state = getOutput(PIN(C,13));
-  67              		.loc 1 33 5 view .LVU7
-  68              		.loc 1 33 13 is_stmt 0 view .LVU8
-  69 001c 4FF00050 		mov	r0, #536870912
-  70 0020 FFF7FEFF 		bl	getOutput
-  71              	.LVL4:
-  34:Core/Src/main.c ****     setOutput(PIN(C,13), !state);
-  72              		.loc 1 34 5 is_stmt 1 view .LVU9
-  73 0024 B0FA80F1 		clz	r1, r0
-  74 0028 4909     		lsrs	r1, r1, #5
-  75 002a 4FF00050 		mov	r0, #536870912
-  76              	.LVL5:
-  77              		.loc 1 34 5 is_stmt 0 view .LVU10
-  78 002e FFF7FEFF 		bl	setOutput
-  79              	.LVL6:
-  30:Core/Src/main.c ****   while (1)
-  80              		.loc 1 30 9 is_stmt 1 view .LVU11
-ARM GAS  /tmp/ccgFhvyf.s 			page 3
-
-
-  81              	.L4:
-  30:Core/Src/main.c ****   while (1)
-  82              		.loc 1 30 3 view .LVU12
-  32:Core/Src/main.c ****     state = getOutput(PIN(C,13));
-  83              		.loc 1 32 5 view .LVU13
-  84              	.LBB5:
-  32:Core/Src/main.c ****     state = getOutput(PIN(C,13));
-  85              		.loc 1 32 9 view .LVU14
-  32:Core/Src/main.c ****     state = getOutput(PIN(C,13));
-  86              		.loc 1 32 18 is_stmt 0 view .LVU15
-  87 0032 0023     		movs	r3, #0
-  32:Core/Src/main.c ****     state = getOutput(PIN(C,13));
-  88              		.loc 1 32 5 view .LVU16
-  89 0034 EFE7     		b	.L2
-  90              	.L7:
-  91 0036 00BF     		.align	2
-  92              	.L6:
-  93 0038 80969800 		.word	10000000
-  94              	.LBE5:
-  95              		.cfi_endproc
-  96              	.LFE390:
-  98              		.section	.text.Error_Handler,"ax",%progbits
-  99              		.align	1
- 100              		.global	Error_Handler
- 101              		.syntax unified
- 102              		.thumb
- 103              		.thumb_func
- 105              	Error_Handler:
- 106              	.LFB391:
+  32:Core/Src/main.c ****     msDelay(1000);
+  49              		.loc 1 32 5 discriminator 1 view .LVU5
+  50 0010 4FF47A70 		mov	r0, #1000
+  51 0014 FFF7FEFF 		bl	msDelay
+  52              	.LVL2:
+  33:Core/Src/main.c ****     state = gpioGetOutput(PIN(C,13));
+  53              		.loc 1 33 5 discriminator 1 view .LVU6
+  54              		.loc 1 33 13 is_stmt 0 discriminator 1 view .LVU7
+  55 0018 4FF00050 		mov	r0, #536870912
+  56 001c FFF7FEFF 		bl	gpioGetOutput
+  57              	.LVL3:
+  34:Core/Src/main.c ****     gpioSetOutput(PIN(C,13), !state);
+  58              		.loc 1 34 5 is_stmt 1 discriminator 1 view .LVU8
+  59 0020 B0FA80F1 		clz	r1, r0
+  60 0024 4909     		lsrs	r1, r1, #5
+  61 0026 4FF00050 		mov	r0, #536870912
+  62              	.LVL4:
+  63              		.loc 1 34 5 is_stmt 0 discriminator 1 view .LVU9
+  64 002a FFF7FEFF 		bl	gpioSetOutput
+  65              	.LVL5:
+  30:Core/Src/main.c ****   {
+  66              		.loc 1 30 9 is_stmt 1 discriminator 1 view .LVU10
+  67 002e EFE7     		b	.L2
+  68              		.cfi_endproc
+  69              	.LFE390:
+  71              		.section	.text.Error_Handler,"ax",%progbits
+  72              		.align	1
+  73              		.global	Error_Handler
+  74              		.syntax unified
+  75              		.thumb
+  76              		.thumb_func
+  78              	Error_Handler:
+  79              	.LFB391:
   35:Core/Src/main.c **** 
   36:Core/Src/main.c ****   }
   37:Core/Src/main.c **** 
+ARM GAS  /tmp/ccOKiwTr.s 			page 3
+
+
   38:Core/Src/main.c **** }
   39:Core/Src/main.c **** 
   40:Core/Src/main.c **** 
   41:Core/Src/main.c **** void Error_Handler(void)
   42:Core/Src/main.c **** {
- 107              		.loc 1 42 1 is_stmt 1 view -0
- 108              		.cfi_startproc
- 109              		@ Volatile: function does not return.
- 110              		@ args = 0, pretend = 0, frame = 0
- 111              		@ frame_needed = 0, uses_anonymous_args = 0
- 112              		@ link register save eliminated.
+  80              		.loc 1 42 1 view -0
+  81              		.cfi_startproc
+  82              		@ Volatile: function does not return.
+  83              		@ args = 0, pretend = 0, frame = 0
+  84              		@ frame_needed = 0, uses_anonymous_args = 0
+  85              		@ link register save eliminated.
   43:Core/Src/main.c ****   __disable_irq();
- 113              		.loc 1 43 3 view .LVU18
- 114              	.LBB6:
- 115              	.LBI6:
- 116              		.file 2 "lib/Drivers/CMSIS/Include/cmsis_gcc.h"
+  86              		.loc 1 43 3 view .LVU12
+  87              	.LBB4:
+  88              	.LBI4:
+  89              		.file 2 "lib/Drivers/CMSIS/Include/cmsis_gcc.h"
    1:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
    2:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
    3:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
@@ -178,9 +146,6 @@ ARM GAS  /tmp/ccgFhvyf.s 			page 1
    7:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** /*
    8:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
    9:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  *
-ARM GAS  /tmp/ccgFhvyf.s 			page 4
-
-
   10:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * SPDX-License-Identifier: Apache-2.0
   11:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  *
   12:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
@@ -213,6 +178,9 @@ ARM GAS  /tmp/ccgFhvyf.s 			page 1
   39:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** /* CMSIS compiler specific defines */
   40:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ASM
   41:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ASM                                  __asm
+ARM GAS  /tmp/ccOKiwTr.s 			page 4
+
+
   42:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
   43:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __INLINE
   44:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __INLINE                               inline
@@ -238,9 +206,6 @@ ARM GAS  /tmp/ccgFhvyf.s 			page 1
   64:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED_STRUCT
   65:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_STRUCT                        struct __attribute__((packed, aligned(1)))
   66:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
-ARM GAS  /tmp/ccgFhvyf.s 			page 5
-
-
   67:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED_UNION
   68:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_UNION                         union __attribute__((packed, aligned(1)))
   69:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
@@ -273,6 +238,9 @@ ARM GAS  /tmp/ccgFhvyf.s 			page 1
   96:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
   97:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
   98:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_WRITE { uint32_t v; };
+ARM GAS  /tmp/ccOKiwTr.s 			page 5
+
+
   99:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
  100:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32_WRITE(addr, val)    (void)((((struct T_UINT32_WRITE *)(void *)(addr))-
  101:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
@@ -298,9 +266,6 @@ ARM GAS  /tmp/ccgFhvyf.s 			page 1
  121:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
  122:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  123:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/ccgFhvyf.s 			page 6
-
-
  124:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  125:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
  126:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
@@ -318,49 +283,52 @@ ARM GAS  /tmp/ccgFhvyf.s 			page 1
  138:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
  139:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  140:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __disable_irq(void)
- 117              		.loc 2 140 27 view .LVU19
- 118              	.LBB7:
+  90              		.loc 2 140 27 view .LVU13
+  91              	.LBB5:
  141:lib/Drivers/CMSIS/Include/cmsis_gcc.h **** {
  142:lib/Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsid i" : : : "memory");
- 119              		.loc 2 142 3 view .LVU20
- 120              		.syntax unified
- 121              	@ 142 "lib/Drivers/CMSIS/Include/cmsis_gcc.h" 1
- 122 0000 72B6     		cpsid i
- 123              	@ 0 "" 2
- 124              		.thumb
- 125              		.syntax unified
- 126              	.L9:
- 127              	.LBE7:
- 128              	.LBE6:
+  92              		.loc 2 142 3 view .LVU14
+  93              		.syntax unified
+  94              	@ 142 "lib/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+  95 0000 72B6     		cpsid i
+  96              	@ 0 "" 2
+  97              		.thumb
+  98              		.syntax unified
+  99              	.L5:
+ 100              	.LBE5:
+ 101              	.LBE4:
   44:Core/Src/main.c ****   while (1)
- 129              		.loc 1 44 3 discriminator 1 view .LVU21
+ARM GAS  /tmp/ccOKiwTr.s 			page 6
+
+
+ 102              		.loc 1 44 3 discriminator 1 view .LVU15
   45:Core/Src/main.c ****   {
   46:Core/Src/main.c ****   }
- 130              		.loc 1 46 3 discriminator 1 view .LVU22
+ 103              		.loc 1 46 3 discriminator 1 view .LVU16
   44:Core/Src/main.c ****   while (1)
- 131              		.loc 1 44 9 discriminator 1 view .LVU23
- 132 0002 FEE7     		b	.L9
- 133              		.cfi_endproc
- 134              	.LFE391:
- 136              		.text
- 137              	.Letext0:
- 138              		.file 3 "/home/fran/.arm_gnu_toolchain/arm-none-eabi/include/machine/_default_types.h"
- 139              		.file 4 "/home/fran/.arm_gnu_toolchain/arm-none-eabi/include/sys/_stdint.h"
- 140              		.file 5 "lib/odeta_gpio.h"
- 141              		.file 6 "lib/odeta_lib.h"
-ARM GAS  /tmp/ccgFhvyf.s 			page 7
+ 104              		.loc 1 44 9 discriminator 1 view .LVU17
+ 105 0002 FEE7     		b	.L5
+ 106              		.cfi_endproc
+ 107              	.LFE391:
+ 109              		.text
+ 110              	.Letext0:
+ 111              		.file 3 "/home/fran/.arm_gnu_toolchain/arm-none-eabi/include/machine/_default_types.h"
+ 112              		.file 4 "/home/fran/.arm_gnu_toolchain/arm-none-eabi/include/sys/_stdint.h"
+ 113              		.file 5 "lib/odeta_gpio.h"
+ 114              		.file 6 "lib/odeta_lib.h"
+ARM GAS  /tmp/ccOKiwTr.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-     /tmp/ccgFhvyf.s:21     .text.main:00000000 $t
-     /tmp/ccgFhvyf.s:27     .text.main:00000000 main
-     /tmp/ccgFhvyf.s:93     .text.main:00000038 $d
-     /tmp/ccgFhvyf.s:99     .text.Error_Handler:00000000 $t
-     /tmp/ccgFhvyf.s:105    .text.Error_Handler:00000000 Error_Handler
+     /tmp/ccOKiwTr.s:21     .text.main:00000000 $t
+     /tmp/ccOKiwTr.s:27     .text.main:00000000 main
+     /tmp/ccOKiwTr.s:72     .text.Error_Handler:00000000 $t
+     /tmp/ccOKiwTr.s:78     .text.Error_Handler:00000000 Error_Handler
 
 UNDEFINED SYMBOLS
 init
-setPinsAsOutput
-getOutput
-setOutput
+gpioSetPinsAsOutput
+msDelay
+gpioGetOutput
+gpioSetOutput

@@ -35,4 +35,27 @@ void init(){
     LL_Init1msTick(16000000);
     LL_SetSystemCoreClock(16000000);
     LL_RCC_SetTIMPrescaler(LL_RCC_TIM_PRESCALER_TWICE);
+
+    //Enable systick interrupt
+    NVIC_SetPriority(SysTick_IRQn, 1);
+    NVIC_EnableIRQ(SysTick_IRQn);
+    LL_SYSTICK_EnableIT();
+
 }
+
+volatile static uint32_t ticks = 0;
+
+uint32_t getTicks(void){
+    return ticks;
+}
+
+void incTick(void){
+    ticks++;
+}
+
+void msDelay(uint32_t ms_to_wait){
+    uint32_t start_ticks = getTicks();
+
+    while(getTicks() != start_ticks + ms_to_wait);
+}
+

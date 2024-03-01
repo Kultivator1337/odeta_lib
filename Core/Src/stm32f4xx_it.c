@@ -22,6 +22,7 @@
 #include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "odeta_lib.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -183,7 +184,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-
+  incTick();
   /* USER CODE END SysTick_IRQn 0 */
 
   /* USER CODE BEGIN SysTick_IRQn 1 */
@@ -191,6 +192,39 @@ void SysTick_Handler(void)
   /* USER CODE END SysTick_IRQn 1 */
 }
 
+void EXTI0_IRQHandler(void){
+  exti_handler(0);
+}
+void EXTI1_IRQHandler(void){
+  exti_handler(1);
+}
+void EXTI2_IRQHandler(void){
+  exti_handler(2);
+}
+void EXTI3_IRQHandler(void){
+  exti_handler(3);
+}
+void EXTI4_IRQHandler(void){
+  exti_handler(4);
+}
+
+void EXTI9_5_IRQHandler(void){
+  uint32_t lines = EXTI->PR & 0x03E0;
+  while(lines){
+    uint32_t ln = _BIT_POS(lines);
+    exti_handler(ln);
+    lines &= ~(0x01UL<<ln);
+  }
+}
+
+void EXTI15_10_IRQHandler(void){
+  uint32_t lines = EXTI->PR & 0xFC00;
+  while(lines){
+    uint32_t ln = _BIT_POS(lines);
+    exti_handler(ln);
+    lines &= ~(0x01UL<<ln);
+  }
+}
 /******************************************************************************/
 /* STM32F4xx Peripheral Interrupt Handlers                                    */
 /* Add here the Interrupt Handlers for the used peripherals.                  */
