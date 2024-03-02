@@ -98,21 +98,21 @@ void gpioSetPinsAsOutput(uint32_t pins, OutputMode_t mode);
 ```
 + Set pins as output
 + Mode can be a combination of OUTPUT_OPENDRAIN, OUTPUT_PUSHPULL, OUTPUT_PULLUP, OUTPUT_PULLDOWN and OUTPUT_NOPULL
-+ Ex. `gpioSetPinsAsOutput(LED|_PIN(B, 8), OUTPUT_PUSHPULL|OUTPUT_NOPULL);`{:.c .highlight}
++ Ex. `gpioSetPinsAsOutput(LED|_PIN(B, 8), OUTPUT_PUSHPULL|OUTPUT_NOPULL);`
 
 ```c
 void gpioSetPinsAsInput(uint32_t pins, InputMode_t mode);
 ```
 + Set pins as input
 + Mode can be INPUT_PULLUP, INPUT_PULLDOWN and INPUT_NOPULL
-+ Ex. `gpioSetPinsAsInput(KEY|_PINS(B,5), INPUT_PULLUP);`{:.c .highlight}
++ Ex. `gpioSetPinsAsInput(KEY|_PINS(B,5), INPUT_PULLUP);`
 
 ```c
 void gpioSetOutput(uint32_t pins, uint32_t state);
 ```
 + Set the level of output pins
 + Pins will be set to high level if the corresponding bit in state is 1, and low if it is 0
-+ Ex. `gpioSetOutput(LED|_PIN(B, 8), LED)`{:.c .highlight} -> Sets LED pin high and B8 low
++ Ex. `gpioSetOutput(LED|_PIN(B, 8), LED)` -> Sets LED pin high and B8 low
 + To set all pins high or low, state can be set to HIGH or LOW
 
 ```c
@@ -135,8 +135,8 @@ uint32_t gpioGetOutput(uint32_t pins);
 void gpioRegisterInterruptHandler(uint32_t pin, GpioIntHandler_f handler);
 ```
 + Register a function that will be called when an interrupt caused by "pin" occurs
-+ The handler function should be of type `void`{:.c .highlight} and accept one `uint32_t`{:.c .highlight} parameter, signifying the pin which caused the interrupt
-+ Ex. `void keyPressedHandler (uint32_t pin);`{:.c .highlight}
++ The handler function should be of type `void` and accept one `uint32_t` parameter, signifying the pin which caused the interrupt
++ Ex. `void keyPressedHandler (uint32_t pin);`
 
 ```c
 void gpioEnableInterrupt(uint32_t pin, GpioIntMode_t mode, uint32_t debounce);
