@@ -9,7 +9,7 @@ DEBUG = 1
 # optimization
 OPT = -Og
 
-GCC_PATH = ~/.arm_gnu_toolchain/bin/
+GCC_PATH = ${HOME}/.arm_gnu_toolchain/bin/
 
 #######################################
 # paths
@@ -128,7 +128,7 @@ LDSCRIPT = STM32F411CEUx_FLASH.ld
 
 # libraries
 LIBS = -lc -lm -lnosys 
-LIBDIR = -L/home/fran/.arm_gnu_toolchain/arm-none-eabi/include
+LIBDIR = -L$${HOME}/.arm_gnu_toolchain/arm-none-eabi/include
 LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
 # default action: build all

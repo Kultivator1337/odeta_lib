@@ -28,7 +28,7 @@
 #endif
 
 #define _IS_SET(x, bit) ((x&bit)==bit)
-#define _BIT_POS(x)  (31 - __CLZ(x))
+#define _MSB(x)  (31 - __CLZ(x))
 
 
 void init(void);

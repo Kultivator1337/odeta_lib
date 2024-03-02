@@ -15,7 +15,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/lib/**",
-                "${workspaceFolder}/app/**"
+                "${workspaceFolder}/app/**",
+                "${env:HOME}/.arm_gnu_toolchain/bin//arm-none-eabi-objcopy/**"
 
             ],
             "defines": [],

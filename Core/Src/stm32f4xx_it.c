@@ -188,7 +188,7 @@ void SysTick_Handler(void)
   //Debounce pins
   uint32_t lines = _gpioGetDebounceLines();
   while(lines){
-    uint32_t line = _BIT_POS(lines);
+    uint32_t line = _MSB(lines);
     GpioIntCB_t *l = _gpioGetIntCallback(line);
     
     if (gpioGetInput(l->pin) != l->trig_lvl){
@@ -209,26 +209,26 @@ void SysTick_Handler(void)
 }
 
 void EXTI0_IRQHandler(void){
-  exti_handler(0);
+  _exti_handler(0);
 }
 void EXTI1_IRQHandler(void){
-  exti_handler(1);
+  _exti_handler(1);
 }
 void EXTI2_IRQHandler(void){
-  exti_handler(2);
+  _exti_handler(2);
 }
 void EXTI3_IRQHandler(void){
-  exti_handler(3);
+  _exti_handler(3);
 }
 void EXTI4_IRQHandler(void){
-  exti_handler(4);
+  _exti_handler(4);
 }
 
 void EXTI9_5_IRQHandler(void){
   uint32_t lines = EXTI->PR & 0x03E0;
   while(lines){
-    uint32_t ln = _BIT_POS(lines);
-    exti_handler(ln);
+    uint32_t ln = _MSB(lines);
+    _exti_handler(ln);
     lines &= ~(0x01UL<<ln);
   }
 }
@@ -236,8 +236,8 @@ void EXTI9_5_IRQHandler(void){
 void EXTI15_10_IRQHandler(void){
   uint32_t lines = EXTI->PR & 0xFC00;
   while(lines){
-    uint32_t ln = _BIT_POS(lines);
-    exti_handler(ln);
+    uint32_t ln = _MSB(lines);
+    _exti_handler(ln);
     lines &= ~(0x01UL<<ln);
   }
 }

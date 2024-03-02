@@ -25,7 +25,7 @@ static void _gpioDebounce(uint32_t line){
     active_debounce_lines |= (0x01UL<<line);
 }
 
-void exti_handler(uint32_t line){
+void _exti_handler(uint32_t line){
     if (line > 15) return;
     if (gpio_handlers[line].f){
         if (gpio_handlers[line].debounce_t){
@@ -40,8 +40,8 @@ void exti_handler(uint32_t line){
 
 void gpioEnableInterrupt(uint32_t pin, GpioIntMode_t mode, uint32_t debounce){
     //set NVIC
-    uint32_t line = _PORT(A, pin) | _PORT(B, pin) | _PORT(C, pin);
-    line = _BIT_POS(line);
+    uint32_t line = _PINS_2_PORT(A, pin) | _PINS_2_PORT(B, pin) | _PINS_2_PORT(C, pin);
+    line = _MSB(line);
 
     gpio_handlers[line].pin = pin;
     gpio_handlers[line].mode = mode;
@@ -64,15 +64,15 @@ void gpioEnableInterrupt(uint32_t pin, GpioIntMode_t mode, uint32_t debounce){
 }
 
 void gpioRegisterInterruptHandler(uint32_t pin, GpioIntHandler_f handler){
-    uint32_t line = _PORT(A, pin) | _PORT(B, pin) | _PORT(C, pin);
-    line = _BIT_POS(line);
+    uint32_t line = _PINS_2_PORT(A, pin) | _PINS_2_PORT(B, pin) | _PINS_2_PORT(C, pin);
+    line = _MSB(line);
 
     gpio_handlers[line].f = handler;
 }
 
 static void _setPortPinsAsOutput(GPIO_TypeDef *port, uint32_t pins, OutputMode_t mode){
     while( pins ){
-        uint32_t pin_no = _BIT_POS(pins);
+        uint32_t pin_no = _MSB(pins);
         port->MODER &= ~(0x01UL<<(2*(pin_no)+1));
         port->MODER |= (0x01UL<<(2*(pin_no)));
 
@@ -90,7 +90,7 @@ static void _setPortPinsAsOutput(GPIO_TypeDef *port, uint32_t pins, OutputMode_t
 
 static void _setPortPinsAsInput(GPIO_TypeDef *port, uint32_t pins, InputMode_t mode){
     while( pins ){
-        uint32_t pin_no = _BIT_POS(pins);
+        uint32_t pin_no = _MSB(pins);
         port->MODER &= ~(0x11UL<<(2*(pin_no)));
 
         port->PUPDR &= ~(((_IS_SET(mode, INPUT_PULLUP)<<1)|_IS_SET(mode, INPUT_PULLDOWN))<<(2*(pin_no)));
@@ -100,57 +100,74 @@ static void _setPortPinsAsInput(GPIO_TypeDef *port, uint32_t pins, InputMode_t m
     }
 }
 
-static void _setPortOutput(GPIO_TypeDef *port, uint32_t pins, uint8_t state){
-    if (state)
-        port->ODR |= pins;
-    else
-        port->ODR &= ~pins;
+//static void _setPortOutput(GPIO_TypeDef *port, uint32_t pins){
+#define _SET_PORT_OUTPUT(P, pins, state){\
+    GPIO##P->ODR &= ~_PINS_2_PORT(P, pins^(pins&state));\
+    GPIO##P->ODR |=  (_PINS_2_PORT(P, pins&state));\
 }
 
-static uint32_t _getPortInput(GPIO_TypeDef *port, uint32_t pins){
-    return ((port->IDR & pins) == pins);
-}
 
-static uint32_t _getPortOutput(GPIO_TypeDef *port, uint32_t pins){
-    return ((port->ODR & pins) == pins);
-}
+#define _GET_PORT_INPUT(P, pins) _PORT_2_PINS(P, GPIO##P->IDR&(_PINS_2_PORT(P, pins)))
+
+#define _GET_PORT_OUTPUT(P, pins) _PORT_2_PINS(P, GPIO##P->ODR&(_PINS_2_PORT(P, pins)))
+
+
+
 
 void gpioSetPinsAsOutput(uint32_t pins, OutputMode_t mode){
-    _setPortPinsAsOutput(GPIOA, _PORT(A, pins), mode);
-    _setPortPinsAsOutput(GPIOB, _PORT(B, pins), mode);
-    _setPortPinsAsOutput(GPIOC, _PORT(C, pins), mode);
+    _setPortPinsAsOutput(GPIOA, _PINS_2_PORT(A, pins), mode);
+    _setPortPinsAsOutput(GPIOB, _PINS_2_PORT(B, pins), mode);
+    _setPortPinsAsOutput(GPIOC, _PINS_2_PORT(C, pins), mode);
 }
 
 
 void gpioSetPinsAsInput(uint32_t pins, InputMode_t mode){
-    _setPortPinsAsInput(GPIOA, _PORT(A, pins), mode);
-    _setPortPinsAsInput(GPIOB, _PORT(B, pins), mode);
-    _setPortPinsAsInput(GPIOC, _PORT(C, pins), mode);
+    _setPortPinsAsInput(GPIOA, _PINS_2_PORT(A, pins), mode);
+    _setPortPinsAsInput(GPIOB, _PINS_2_PORT(B, pins), mode);
+    _setPortPinsAsInput(GPIOC, _PINS_2_PORT(C, pins), mode);
 }
 
 
 
-void gpioSetOutput(uint32_t pins, uint8_t state){
-    _setPortOutput(GPIOA, _PORT(A, pins), state);
-    _setPortOutput(GPIOB, _PORT(B, pins), state);
-    _setPortOutput(GPIOC, _PORT(C, pins), state);
+void gpioSetOutput(uint32_t pins, uint32_t state){
+    _SET_PORT_OUTPUT(A, pins, state);
+    _SET_PORT_OUTPUT(B, pins, state);
+    _SET_PORT_OUTPUT(C, pins, state);
 }
 
 
 uint32_t gpioGetInput(uint32_t pins){
-    uint32_t ret = 1;
-    ret &= _getPortInput(GPIOA, _PORT(A, pins));
-    ret &= _getPortInput(GPIOB, _PORT(B, pins));
-    ret &= _getPortInput(GPIOC, _PORT(C, pins));
+    uint32_t ret = 0;
+    ret |= _GET_PORT_INPUT(A, pins);
+    ret |= _GET_PORT_INPUT(B, pins);
+    ret |= _GET_PORT_INPUT(C, pins);
 
     return ret;
 }
 
+uint32_t gpioGetInputDebounced(uint32_t pins, uint32_t debounce_cnt){
+    int32_t ret = gpioGetInput(pins);
+    int32_t state;
+    int32_t debounce = 0;
+    for(uint32_t i = 0; i < 2*debounce_cnt; i++){
+        msDelay(1);
+        if (debounce == debounce_cnt)
+            return ret;
+        state = gpioGetInput(pins);
+        if (state == ret)
+            debounce++;
+        else
+            debounce = 0;
+        ret = state;
+    }
+    return ret;
+}
+
 uint32_t gpioGetOutput(uint32_t pins){
-    uint32_t ret = 1;
-    ret &= _getPortOutput(GPIOA, _PORT(A, pins));
-    ret &= _getPortOutput(GPIOB, _PORT(B, pins));
-    ret &= _getPortOutput(GPIOC, _PORT(C, pins));
+    uint32_t ret = 0;
+    ret |= _GET_PORT_OUTPUT(A, pins);
+    ret |= _GET_PORT_OUTPUT(B, pins);
+    ret |= _GET_PORT_OUTPUT(C, pins);
 
     return ret;
 }
